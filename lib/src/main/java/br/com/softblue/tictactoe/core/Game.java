@@ -1,8 +1,10 @@
 package br.com.softblue.tictactoe.core;
 
+import java.io.IOException;
 import java.sql.Savepoint;
 
 import br.com.softblue.tictactoe.Constants;
+import br.com.softblue.tictactoe.score.FileScoreManager;
 import br.com.softblue.tictactoe.score.ScoreManager;
 import br.com.softblue.tictactoe.ui.UI;
 
@@ -14,7 +16,8 @@ public class Game {
 		private ScoreManager scoreManager;
 		
 	
-		public void play() {
+		public void play() throws IOException {
+			scoreManager = createScoreManager();
 			
 			UI.printGameTitle();
 			
@@ -70,7 +73,7 @@ public class Game {
 			Integer score = scoreManager.getScore(player);
 			
 			if (score != null) {
-				UI.printText("O jogador '" + player.getName() + "já possui " + score + " vitória(s).");
+				UI.printText("O jogador '" + player.getName() + "' já possui " + score + " vitória(s).");
 			}
 			
 			
@@ -88,8 +91,8 @@ public class Game {
 			
 		}
 		
-		private ScoreManager createScoreManager() {
-			return null;
+		private ScoreManager createScoreManager() throws IOException {
+			return new FileScoreManager();
 		}
 		
 		
